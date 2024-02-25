@@ -1,0 +1,46 @@
+{% extends "components/master_layout.html" %}
+
+{% block content %}
+<div class="container pt-4 py-5 mb-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Active Trackers</h1>
+                    <ul>
+                        {% for active_tracker in active_trackers %}
+                        <li><a href="/location_live_tracking/{{active_tracker}}">Tracker ID: {{ active_tracker }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Tracker Details</h1>
+                    <h2>Tracker ID: {{ tracker_id }}</h2>
+                    <div id="map" style="height: 400px;"></div>
+                    <h3>Latitude and Longitude:</h3>
+                    <ul>
+                        {% for location in locations %}
+                        <li>Latitude: {{ location.lat }}, Longitude: {{ location.long }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    var locations = {{ locations | tojson }};
+</script>
+<script src="{{ url_for('static',filename='js/map.js') }}"></script>
+{% endblock %}
