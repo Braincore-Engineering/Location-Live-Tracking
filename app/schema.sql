@@ -1,9 +1,0 @@
-DROP TABLE IF EXISTS location;
-
-CREATE TABLE location (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  tracker_id INTEGER NOT NULL,
-  latitude REAL NOT NULL,
-  longitude REAL NOT NULL,
-  timestamp DATETIME NOT NULL
-);
