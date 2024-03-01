@@ -9,6 +9,8 @@ bp = Blueprint("mysql", __name__, url_prefix="/tracker")
 
 
 @bp.route("/insert/", methods=["POST"])
+@limiter.limit("5 per minute")
+@auth.login_required()
 def insert_data():
     name = request.form.get("name")
     desc = request.form.get("description")
