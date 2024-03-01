@@ -2,6 +2,8 @@ from flask import Flask
 from config import CONFIG
 
 from index import bp as index_bp
+from crud import bp as crud_bp
+
 from errors import bp as error_bp
 from location_live_tracking import bp as llt_bp
 from receive_data import bp as rd_bp
@@ -16,6 +18,8 @@ def create_app():
     app.config.update(CONFIG)
 
     app.register_blueprint(index_bp)
+    app.register_blueprint(crud_bp)
+
     app.register_blueprint(error_bp)
     app.register_blueprint(llt_bp)
     app.register_blueprint(rd_bp)
