@@ -8,8 +8,8 @@
                 <div class="card-body">
                     <h1>Active Trackers</h1>
                     <ul>
-                        {% for active_tracker in active_trackers %}
-                        <li><a href="/location_live_tracking/{{active_tracker}}">Tracker ID: {{ active_tracker }}</a>
+                        {% for tracker in active_trackers %}
+                        <li><a href="/location_live_tracking/{{tracker.id}}">Tracker: {{ tracker.id }} - {{ tracker.name }}</a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -26,7 +26,7 @@
                     <h3>Latitude and Longitude:</h3>
                     <ul>
                         {% for location in locations %}
-                        <li>Latitude: {{ location.lat }}, Longitude: {{ location.long }}</li>
+                        <li>Latitude: {{ location.lat }}, Longitude: {{ location.lon }}</li>
                         {% endfor %}
                     </ul>
                 </div>

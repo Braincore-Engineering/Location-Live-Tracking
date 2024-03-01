@@ -10,7 +10,7 @@
                     <h1>Trackers</h1>
                     <ul>
                         {% for tracker in trackers %}
-                        <a href="/location_live_tracking/{{tracker}}">Tracker Active: {{ tracker }}</a>
+                        <a href="/location_live_tracking/{{tracker.id}}">Tracker Active:{{ tracker.id }} - {{ tracker.name }}</a>
                         <br>
                         {% endfor %}
                     </ul>

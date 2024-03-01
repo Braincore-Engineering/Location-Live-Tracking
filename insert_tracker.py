@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request
 from database.model.tracker import Tracker
-from database.mysql import db
-from database.model.tracker import Location
+from database.mysql import db, format_database_error
 from auth import auth
 from rate_limiter import limiter
 
@@ -22,7 +21,27 @@ def insert_data():
         tracker = Tracker(name=name, description=desc)
         db.session.add(tracker)
         db.session.commit()
-        return jsonify({"message": "tracker created successfully"}), 201
+        return (
+            jsonify(
+                {
+                    "status": {
+                        "code": 201,
+                        "message": "tracker created successfully",
+                    },
+                    "tracker": {"id": tracker.id, "name": name, "description": desc},
+                }
+            ),
+            201,
+        )
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        error_msg = format_database_error(e)
+        return (
+            jsonify(
+                {
+                    "status": {"code": 500, "message": error_msg},
+                    "data": None,
+                }
+            ),
+            500,
+        )

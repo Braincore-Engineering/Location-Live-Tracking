@@ -14,3 +14,11 @@ class Location(db.Model):
         self.tracker_id = tracker_id
         self.lat = lat
         self.lon = lon
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "tracker_id": self.tracker_id,
+            "lat": self.lat,
+            "lon": self.lon,
+        }
