@@ -7,10 +7,13 @@
             <!-- First column content -->
             <div class="card">
                 <div class="card-body">
-                    <h1>Trackers</h1>
+                    <div class="d-flex justify-content-between">
+                        <h1>Trackers</h1>
+                        <a href="/tracker/insert"><h3>Insert Tracker</h3></a>
+                    </div>
                     <ul>
                         {% for tracker in trackers %}
-                        <a href="/location_live_tracking/{{tracker.id}}">Tracker Active:{{ tracker.id }} - {{ tracker.name }}</a>
+                        <a href="/location_live_tracking/{{tracker.id}}">Tracker Active: {{ tracker.id }} - {{ tracker.name }}</a>
                         <br>
                         {% endfor %}
                     </ul>
