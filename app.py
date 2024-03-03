@@ -1,4 +1,6 @@
+import os
 from flask import Flask
+from socket_io import socketio
 from config import CONFIG
 
 from index import bp as index_bp
@@ -11,6 +13,7 @@ from cache import init_cache_app
 from compress import init_compress_app
 from rate_limiter import init_rate_limiter
 from database.mysql import init_db, init_db_command, drop_db_command
+
 
 def create_app():
     app = Flask(__name__)
@@ -28,7 +31,9 @@ def create_app():
     init_compress_app(app)
     init_rate_limiter(app)
     init_db(app)
-    
+
+    socketio.init_app(app, cors_allowed_origins="*")
+
     # CLI Command
     app.cli.add_command(init_db_command)
     app.cli.add_command(drop_db_command)
@@ -38,4 +43,5 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    app.run()
+    socketio.run(app, debug=True, host="0.0.0.0",
+                 port=int(os.environ.get("PORT", 8080)))

@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from datetime import datetime
 from auth import auth
 from rate_limiter import limiter
+from socket_io import socketio
 
 from database.model.location import Location
 from database.mysql import db, format_database_error
@@ -60,3 +61,18 @@ def receive_data_from_esp32():
             ),
             405,
         )
+
+
+@bp.route("/broadcast", methods=["POST"])
+def broadcast():
+    if request.method == "POST":
+        input_data = request.get_json()
+        message = input_data["message"]
+        socketio.emit('new_broadcast', message)
+        return jsonify({
+            "status": {
+                "code": 200,
+                "message": "Success broadcasting new messae",
+            },
+            "data": None,
+        }), 200
