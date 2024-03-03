@@ -9,19 +9,21 @@
                     <h1>Active Trackers</h1>
                     <ul>
                         {% for tracker in active_trackers %}
-                        <li><a href="/location_live_tracking/{{tracker.id}}">Tracker: {{ tracker.id }} - {{ tracker.name }}</a>
+                        <li>
+                            <a href="/location_live_tracking/{{tracker.id}}">
+                                Tracker: {{ tracker.id }} - {{ tracker.name }}
+                            </a>
+                        </li>
+                        <li>
+                            <p>{{ tracker.description }}</p>
+                        </li>
+                        <li>
+                            <img src="{{ tracker.asset_img_url }}" alt="" width="200">
+                        </li>
+                        <li>
+                            <img src="{{ tracker.tracker_img_url }}" alt="" width="200">
                         </li>
                         {% endfor %}
-                        <li>
-                            <p>Dump Truck Fuso</p>
-                            <img src="https://www.ktbfuso.co.id/wp-content/uploads/2023/02/karoseri-FE-SHDX-Dump-truck.webp"
-                                alt="" width="200">
-                        </li>
-                        <li>
-                            <p>ESP32</p>
-                            <img src="https://m.media-amazon.com/images/I/612eALAbpgL._AC_UF1000,1000_QL80_.jpg" alt=""
-                                width="200">
-                        </li>
                     </ul>
                 </div>
             </div>

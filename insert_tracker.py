@@ -12,9 +12,15 @@ def insert_data():
 
     if form.validate_on_submit():
         name = form.name.data
-        desc = form.name.description
+        desc = form.description.data
+        asset_img_url = form.asset_img_url.data
+        tracker_img_url = form.tracker_img_url.data
 
-        tracker = Tracker(name=name, description=desc)
+        tracker = Tracker(name=name,
+                          description=desc,
+                          asset_img_url=asset_img_url,
+                          tracker_img_url=tracker_img_url,
+                          )
         db.session.add(tracker)
         db.session.commit()
 
