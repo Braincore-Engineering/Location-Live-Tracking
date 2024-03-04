@@ -31,46 +31,58 @@ def insert_data():
     )
 
 
-@bp.route("/api/insert/", methods=["POST"])
+@bp.route("/api/insert/", methods=["POST", "GET"])
 def insert_data_api():
-    name = request.form.get("name")
-    desc = request.form.get("description")
-    asset_img_url = request.form.get("asset_img_url")
-    tracker_img_url = request.form.get("tracker_img_url")
+    if request.method == "POST":
+        name = request.form.get("name")
+        desc = request.form.get("description")
+        asset_img_url = request.form.get("asset_img_url")
+        tracker_img_url = request.form.get("tracker_img_url")
 
-    if not any([name, asset_img_url, tracker_img_url]):
-        return jsonify({"error": "Missing required fields"}), 400
+        if not any([name, asset_img_url, tracker_img_url]):
+            return jsonify({"error": "Missing required fields"}), 400
 
-    try:
-        tracker = Tracker(
-            name=name,
-            description=desc,
-            asset_img_url=asset_img_url,
-            tracker_img_url=tracker_img_url,
-        )
-        db.session.add(tracker)
-        db.session.commit()
+        try:
+            tracker = Tracker(
+                name=name,
+                description=desc,
+                asset_img_url=asset_img_url,
+                tracker_img_url=tracker_img_url,
+            )
+            db.session.add(tracker)
+            db.session.commit()
+            return (
+                jsonify(
+                    {
+                        "status": {
+                            "code": 201,
+                            "message": "tracker created successfully",
+                        },
+                        "tracker": {
+                            "id": tracker.id,
+                            "name": name,
+                            "description": desc,
+                        },
+                    }
+                ),
+                201,
+            )
+        except Exception as e:
+            db.session.rollback()
+            error_msg = format_database_error(e)
+            return (
+                jsonify(
+                    {
+                        "status": {"code": 500, "message": error_msg},
+                        "data": None,
+                    }
+                ),
+                500,
+            )
+    else:
         return (
             jsonify(
-                {
-                    "status": {
-                        "code": 201,
-                        "message": "tracker created successfully",
-                    },
-                    "tracker": {"id": tracker.id, "name": name, "description": desc},
-                }
+                {"status": {"code": 405, "message": "Method not allowed"}, "data": None}
             ),
-            201,
-        )
-    except Exception as e:
-        db.session.rollback()
-        error_msg = format_database_error(e)
-        return (
-            jsonify(
-                {
-                    "status": {"code": 500, "message": error_msg},
-                    "data": None,
-                }
-            ),
-            500,
+            405,
         )
