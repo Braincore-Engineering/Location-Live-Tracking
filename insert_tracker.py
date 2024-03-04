@@ -16,11 +16,12 @@ def insert_data():
         asset_img_url = form.asset_img_url.data
         tracker_img_url = form.tracker_img_url.data
 
-        tracker = Tracker(name=name,
-                          description=desc,
-                          asset_img_url=asset_img_url,
-                          tracker_img_url=tracker_img_url,
-                          )
+        tracker = Tracker(
+            name=name,
+            description=desc,
+            asset_img_url=asset_img_url,
+            tracker_img_url=tracker_img_url,
+        )
         db.session.add(tracker)
         db.session.commit()
 
@@ -34,12 +35,19 @@ def insert_data():
 def insert_data_api():
     name = request.form.get("name")
     desc = request.form.get("description")
+    asset_img_url = request.form.asset_img_url
+    tracker_img_url = request.form.tracker_img_url
 
     if not name:
         return jsonify({"error": "Missing required fields"}), 400
 
     try:
-        tracker = Tracker(name=name, description=desc)
+        tracker = Tracker(
+            name=name,
+            description=desc,
+            asset_img_url=asset_img_url,
+            tracker_img_url=tracker_img_url,
+        )
         db.session.add(tracker)
         db.session.commit()
         return (
