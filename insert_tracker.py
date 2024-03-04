@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from auth import auth
+from rate_limiter import limiter
 from database.model.tracker import Tracker
 from database.mysql import db, format_database_error
 from form.form_insert import InsertTrackerForm
@@ -32,6 +34,8 @@ def insert_data():
 
 
 @bp.route("/api/insert/", methods=["POST", "GET"])
+@limiter.limit("5 per minute")
+@auth.login_required()
 def insert_data_api():
     if request.method == "POST":
         name = request.form.get("name")
