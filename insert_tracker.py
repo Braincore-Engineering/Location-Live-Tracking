@@ -38,7 +38,7 @@ def insert_data_api():
     asset_img_url = request.form.get("asset_img_url")
     tracker_img_url = request.form.get("tracker_img_url")
 
-    if not any(name, asset_img_url, tracker_img_url):
+    if not any([name, asset_img_url, tracker_img_url]):
         return jsonify({"error": "Missing required fields"}), 400
 
     try:
