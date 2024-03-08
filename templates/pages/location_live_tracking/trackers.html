@@ -36,11 +36,23 @@
                     <h2>Tracker ID: {{ tracker_id }}</h2>
                     <div id="map" style="height: 400px;"></div>
                     <h3>Latitude and Longitude:</h3>
-                    <ul>
-                        {% for location in locations %}
-                        <li>Latitude: {{ location.lat }}, Longitude: {{ location.lon }}</li>
-                        {% endfor %}
-                    </ul>
+                    <table id="myTable">
+                        <thead>
+                            <tr>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for location in locations %}
+                            <tr>
+                                <td>{{ location.lat }}</td>
+                                <td>{{ location.lon }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
 
                     <p id="broadcastMessage"></p>
 
@@ -56,6 +68,11 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
     var locations = {{ locations | tojson }};
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            responsive: true,
+        });
+    });
 </script>
 <script src="{{ url_for('static',filename='js/map.js') }}"></script>
 {% endblock %}
