@@ -19,10 +19,10 @@ def receive_data_from_esp32():
         tracker_id = input_data["tracker_id"]
         lat = input_data["lat"]
         lon = input_data["lon"]
-        timestamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        timestamp = input_data["timestamp"]
 
         try:
-            location = Location(tracker_id, lat, lon)
+            location = Location(tracker_id, lat, lon, timestamp)
             db.session.add(location)
             db.session.commit()
             return (
