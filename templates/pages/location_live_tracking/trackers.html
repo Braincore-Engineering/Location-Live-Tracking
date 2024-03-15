@@ -6,7 +6,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h1>Current Tracker</h1>
+                    <h1>Active Trackers</h1>
                     <ul>
                         {% for tracker in active_trackers %}
                         {% if tracker.id == tracker_id %}
@@ -74,7 +74,8 @@
     var locations = {{ locations | tojson }};
     $(document).ready(function () {
         $('#myTable').DataTable({
-            responsive: true,
+            "order": [[2, 'desc']], // Sort by the third column (Timestamp) in descending order
+            "responsive": true
         });
     });
 </script>
