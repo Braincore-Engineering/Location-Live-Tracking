@@ -1,5 +1,6 @@
 from database.mysql import db
 from database.model.tracker import Tracker
+from datetime import datetime
 
 
 class Location(db.Model):
@@ -8,7 +9,7 @@ class Location(db.Model):
     lat = db.Column(db.Float, nullable=False)
     lon = db.Column(db.Float, nullable=False)
     lon = db.Column(db.Float, nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
     tracker = db.relationship("Tracker", backref="locations")
