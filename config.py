@@ -1,5 +1,7 @@
 import os
+# from dotenv import load_dotenv
 
+# load_dotenv()
 
 CONFIG = {
     "SECRET_KEY": os.getenv("SECRET_KEY"),

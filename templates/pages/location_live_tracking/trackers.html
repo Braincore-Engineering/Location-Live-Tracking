@@ -6,9 +6,8 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h1>Active Trackers</h1>
+                    <h1>Current Tracker</h1>
                     <ul>
-                        {% for tracker in active_trackers %}
                         <li>
                             <a href="/location_live_tracking/{{tracker.id}}">
                                 Tracker: {{ tracker.id }} - {{ tracker.name }}
@@ -23,7 +22,6 @@
                         <li>
                             <img src="{{ tracker.tracker_img_url }}" alt="" width="200">
                         </li>
-                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -33,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1>Tracker Details</h1>
-                    <h2>Tracker ID: {{ tracker_id }}</h2>
+                    <h2>Tracker ID: {{ tracker.id }}</h2>
                     <div id="map" style="height: 400px;"></div>
                     <h3>Latitude and Longitude:</h3>
                     <table id="myTable">
@@ -41,6 +39,7 @@
                             <tr>
                                 <th>Latitude</th>
                                 <th>Longitude</th>
+                                <th>Timestamp</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +47,7 @@
                             <tr>
                                 <td>{{ location.lat }}</td>
                                 <td>{{ location.lon }}</td>
+                                <td>{{ location.timestamp }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -70,7 +70,8 @@
     var locations = {{ locations | tojson }};
     $(document).ready(function () {
         $('#myTable').DataTable({
-            responsive: true,
+            "order": [[2, 'desc']], // Sort by the third column (Timestamp) in descending order
+            "responsive": true
         });
     });
 </script>

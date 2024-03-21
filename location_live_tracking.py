@@ -17,13 +17,13 @@ def location_live_tracking():
 @bp.route("/<int:tracker_id>")
 @cache.cached(timeout=15)
 def location_live_tracking_tracker(tracker_id):
-    trackers = Tracker.query.all()
+    # trackers = Tracker.query.all()
+    tracker = Tracker.query.filter_by(id=tracker_id).first()
 
     data = Location.query.filter(Location.tracker_id == tracker_id).all()
     locations = [location.to_dict() for location in data]
     return render_template(
         "pages/location_live_tracking/trackers.html",
-        tracker_id=tracker_id,
         locations=locations,
-        active_trackers=trackers,
+        tracker=tracker,
     )
