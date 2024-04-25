@@ -49,7 +49,7 @@ const char* serverName = "https://location-live-tracking-muf7kziviq-as.a.run.app
 const char* trackerId = "2";
 ```
 
-Adjust to your local WiFi SSID and password, and your designated trackerId
+Adjust to your local WiFi SSID and password, latest endpoint and your designated trackerId
 
 Compile and upload to the ESP32 and wait until the GPS module calibrated itself!
 
