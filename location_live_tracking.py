@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, jsonify, render_template
+from socket_io import socketio
 from cache import cache
 from database.model.tracker import Tracker
 from database.model.location import Location
 
-bp = Blueprint("location_live_tracking", __name__,
-               url_prefix="/location_live_tracking")
+bp = Blueprint("location_live_tracking", __name__, url_prefix="/location_live_tracking")
 
 
 @bp.route("/")

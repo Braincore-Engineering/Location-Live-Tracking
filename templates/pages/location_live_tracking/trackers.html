@@ -66,14 +66,36 @@
 {% block script %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="{{ url_for('static',filename='js/map.js') }}"></script>
 <script>
-    var locations = {{ locations | tojson }};
+  var map; // Declare the map variable
+    var locations = {{ locations | tojson }}; // Initial locations
+
     $(document).ready(function () {
         $('#myTable').DataTable({
-            "order": [[2, 'desc']], // Sort by the third column (Timestamp) in descending order
+            "order": [[2, 'desc']],
             "responsive": true
         });
+        initializeMap(locations);
+        socket.on("new_broadcast", (message) => {
+            locations = message;
+
+            initializeMap(locations);
+            updateTable(locations);
+        });
     });
+
+    function updateTable(locations) {
+      var table = $('#myTable').DataTable();
+      table.clear();
+
+      locations.forEach(function(location) {
+          table.row.add([
+              location.lat,
+              location.lon,
+              location.timestamp
+          ]).draw();
+      });
+  }
 </script>
-<script src="{{ url_for('static',filename='js/map.js') }}"></script>
 {% endblock %}
