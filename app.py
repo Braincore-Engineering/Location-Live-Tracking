@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from mqtt_client import init_mqtt
 from socket_io import socketio
 from config import CONFIG
 
@@ -34,6 +35,7 @@ def create_app():
 
     socketio.init_app(app, cors_allowed_origins="*")
 
+    init_mqtt(app)
     # CLI Command
     app.cli.add_command(init_db_command)
     app.cli.add_command(drop_db_command)
@@ -43,5 +45,6 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    socketio.run(app, debug=True, host="0.0.0.0",
-                 port=int(os.environ.get("PORT", 8080)))
+    socketio.run(
+        app, debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080))
+    )
