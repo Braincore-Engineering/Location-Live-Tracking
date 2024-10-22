@@ -7,7 +7,7 @@ bp = Blueprint("index", __name__)
 
 
 @bp.route("/")
-@limiter.limit("5 per day")
+# @limiter.limit("5 per day")
 @cache.cached(timeout=60)
 def index():
     return render_template("pages/index.html")

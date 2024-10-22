@@ -34,7 +34,7 @@ def insert_data():
 
 
 @bp.route("/api/insert/", methods=["POST", "GET"])
-@limiter.limit("5 per minute")
+# @limiter.limit("5 per minute")
 @auth.login_required()
 def insert_data_api():
     if request.method == "POST":
