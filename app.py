@@ -30,7 +30,7 @@ def create_app():
     # Initializing
     init_cache_app(app)
     init_compress_app(app)
-    init_rate_limiter(app)
+    # init_rate_limiter(app)
     init_db(app)
 
     socketio.init_app(app, cors_allowed_origins="*")
