@@ -24,7 +24,19 @@ function initializeMap(locations) {
     }
   });
 
-  // Add markers for each location
+  // Add markers for first and last locations
+  if (locations.length > 0) {
+    // Marker for the first location
+    var firstMarker = L.marker([firstLocation.lat, firstLocation.lon])
+      .addTo(map)
+      .bindPopup("First Location: " + firstLocation.name); // Add popup if name exists
+
+    // Marker for the last location
+    var lastLocation = locations[locations.length - 1];
+    var lastMarker = L.marker([lastLocation.lat, lastLocation.lon])
+      .addTo(map)
+      .bindPopup("Last Location: " + lastLocation.name); // Add popup if name exists
+  }
 
   // Create a polyline for all locations
   if (locations.length > 1) {
