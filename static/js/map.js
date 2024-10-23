@@ -25,13 +25,6 @@ function initializeMap(locations) {
   });
 
   // Add markers for each location
-  locations.forEach(function (location) {
-    L.marker([location.lat, location.lon])
-      .addTo(map)
-      .bindPopup(
-        "Latitude: " + location.lat + "<br>Longitude: " + location.lon
-      );
-  });
 
   // Create a polyline for all locations
   if (locations.length > 1) {
